@@ -1,0 +1,40 @@
+@page
+@model ObservabilityModel
+
+<section>
+    <h1>Observability wiring</h1>
+    <p>
+        The service receives an <code>ILogger&lt;WorkItemService&gt;</code> plus <code>ILogStore</code>.
+        Every CRUD call writes to both the console logger and the in-memory history so this page can replay the timeline.
+    </p>
+    <pre><code>public WorkItemService(
+    IWorkItemRepository repository,
+    ILogger&lt;WorkItemService&gt; logger,
+    ILogStore logStore)
+{
+    _repository = repository;
+    _logger = logger;
+    _logStore = logStore;
+}</code></pre>
+    <p>
+        Handlers stay thin by calling the service, but you now get log entries for each list/create/update/delete call.
+        Scroll the table below to watch the latest messages with UTC timestamps.
+    </p>
+    <table class="log-table">
+        <thead>
+            <tr>
+                <th><span class="hint" data-hint="Recorded in UTC when the service emitted the log.">Timestamp</span></th>
+                <th><span class="hint" data-hint="The message describes the method and payload context.">Message</span></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var entry in Model.Entries)
+        {
+            <tr>
+                <td>@entry.Timestamp.ToString("u")</td>
+                <td>@entry.Message</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

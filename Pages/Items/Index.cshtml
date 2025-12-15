@@ -1,0 +1,29 @@
+@page
+@model WorkLedger.Pages.Items.IndexModel
+
+<h2><span class="hint" data-hint="WorkItemService.ListItems supplies data each time the page renders.">Work Items</span></h2>
+
+<a asp-page="Create" class="btn btn-primary hint" data-hint="Create posts to WorkItemService.CreateItem and then returns to this list.">Create New Work Item</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><span class="hint" data-hint="Title comes directly from the WorkItem model and is required.">Title</span></th>
+            <th><span class="hint" data-hint="Created is captured at UTC creation time on each WorkItem.">Work Item</span></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Created</td>
+            <td>
+                <a asp-page="Edit" asp-route-id="@item.Id" class="hint" data-hint="EditHandler.OnPost calls WorkItemService.UpdateItem to persist the changes.">Edit</a> |
+                <a asp-page="Delete" asp-route-id="@item.Id" class="hint" data-hint="DeleteHandler posts the id so WorkItemService.DeleteItem removes it from the in-memory list.">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

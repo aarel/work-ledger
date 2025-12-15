@@ -1,0 +1,56 @@
+@page
+@model WorkLedger.Pages.ApiModel
+
+<section>
+    <h1>Minimal API surface</h1>
+    <p>
+        The Razor Pages app exposes the same <code>WorkItemService</code> through REST endpoints.
+        Each route calls the service so the UI and API share validation, persistence, and logging.
+    </p>
+    <table class="api-table">
+        <thead>
+            <tr>
+                <th><span class="hint" data-hint="HTTP verb to call from Postman or another client.">Method</span></th>
+                <th><span class="hint" data-hint="Route to hit on the site.">Route</span></th>
+                <th><span class="hint" data-hint="What the endpoint returns or expects.">Description</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>/api/items</td>
+                <td>Returns the list of work items.</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/items/{id}</td>
+                <td>Returns a single item by ID, or 404 if missing.</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/api/items</td>
+                <td>Creates an item from the JSON payload and returns 201.</td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>/api/items/{id}</td>
+                <td>Updates the item with the supplied payload (404 if none).</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>/api/items/{id}</td>
+                <td>Deletes the matching item (always returns 204 even if repeated).</td>
+            </tr>
+        </tbody>
+    </table>
+    <pre><code>app.MapGet("/api/items", (WorkItemService service) => Results.Ok(service.ListItems()));
+app.MapPost("/api/items", (WorkItemService service, WorkItem item) =>
+{
+    service.CreateItem(item);
+    return Results.Created($"/api/items/{item.Id}", item);
+});</code></pre>
+    <p>
+        Full payloads use <code>WorkItem</code>: supply <code>Title</code> (required, <code>StringLength(80)</code>) and an optional <code>Description</code>.
+        All API paths reuse the logging, persistence, and validation layers already documented on this site.
+    </p>
+</section>

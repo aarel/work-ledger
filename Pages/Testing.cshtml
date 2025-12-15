@@ -1,0 +1,18 @@
+@page
+@model WorkLedger.Pages.TestingModel
+
+<section>
+    <h1>Testing the ledger</h1>
+    <p>
+        <span class="hint" data-hint="xUnit tests focus on WorkItemService so CRUD logic stays reliable.">
+            This suite was built with xUnit and targets `WorkItemService` to show how the service and repository respond to operations.
+        </span>
+        Each test spins up a fresh `InMemoryWorkItemRepository`, seeds it via `CreateItem`, and then asserts the CRUD behavior before any UI hits the handler.
+    </p>
+    <p>
+        <span class="hint" data-hint="Use this command after making service or repository changes.">
+            Use the `<code>dotnet test WorkLedger.Tests</code>` command to run the suite locally and validate any service-level changes.
+        </span>
+        If you build an API or persistence layer, wire new test files into this project so the home page animation can surface your flow.
+    </p>
+</section>

@@ -1,0 +1,36 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work Ledger</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header class="banner">
+    <div class="container">
+        <a class="brand" asp-page="/Index">Work Ledger</a>
+        <nav>
+            <a asp-page="/Index">Home</a>
+            <a asp-page="/Flow">Flow</a>
+            <a asp-page="/Items/Index">Work Items</a>
+            <a asp-page="/Persistence">Persistence</a>
+            <a asp-page="/Observability">Observability</a>
+            <a asp-page="/Api">API</a>
+            <a asp-page="/Items/Create">Create Work Item</a>
+        </nav>
+    </div>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <p>Razor + EF Core + logging demo (no external database required).</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

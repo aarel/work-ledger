@@ -1,0 +1,93 @@
+@page
+@model dynamic
+
+<section class="intro">
+    <h1>Work Ledger</h1>
+    <p>
+        This is a teaching sample for Razor Pages that wires a minimal C# service layer,
+        Razor UI, and an in-memory repository to highlight how simple web apps are structured in .NET.
+        It keeps your focus on the code paths instead of infrastructure so you can experiment freely.
+    </p>
+</section>
+
+<section class="grid">
+    <a class="tile hint" data-hint="WorkLedger.Pages.Items.IndexModel calls WorkItemService.ListItems() so the home list mirrors the repository." asp-page="/Items/Index">
+        <h2>What it is</h2>
+        <p>
+            Work Ledger tracks title/description work items entirely in memory.
+            Each entry is modeled by <code>WorkItem.cs</code>, validated with data annotations,
+            and time-stamped with UTC creation time.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="PageModel handlers bind WorkItem via tag helpers then run WorkItemService Create / Update / Delete." asp-page="/Items/Create">
+        <h2>What it teaches</h2>
+        <p>
+            Razor Pages glues HTTP verbs to <code>PageModel</code> handlers and binds forms via tag helpers.
+            Dependency injection is configured in <code>Program.cs</code>, where services are registered by interface.
+            A scoped <code>WorkItemService</code> handles CRUD logic, keeping the UI lean.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="Documents how WorkLedgerDbContext and EfWorkItemRepository register SQLite storage." asp-page="/Persistence">
+        <h2>Persistence flow</h2>
+        <p>
+            The EF Core repository stores items in <code>workledger.db</code>.
+            It proves how the same service/server structure works when wired to a real database.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="WorkItemService logs every CRUD call into ILogStore so Observability can replay the timeline." asp-page="/Observability">
+        <h2>Observability</h2>
+        <p>
+            WorkItemService now receives an <code>ILogger&lt;WorkItemService&gt;</code> so every CRUD action is recorded.
+            View the logs from the console for an instant trace map of the operations in play.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="Flow page hosts animated cards that narrate wiring, persistence, API, logging, and tests." asp-page="/Flow">
+        <h2>The flow</h2>
+        <p>
+            Follow the Flow page for the animated code cards that map startup wiring, persistence, observability, API endpoints, and tests.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="API page lists the minimal GET / POST / PUT / DELETE endpoints calling WorkItemService." asp-page="/Api">
+        <h2>API</h2>
+        <p>
+            The minimal API exposes `/api/items` operations so other apps can call the same service layer.
+            Check the API page for request/response examples.
+        </p>
+    </a>
+    <a class="tile hint" data-hint="Visit the CRUD view to see WorkItemService in action with live data." asp-page="/Items/Index">
+        <h2>How it works</h2>
+        <p>
+            Click the navigation link to visit <strong>/Items</strong>, where the index page calls
+            <code>WorkItemService.ListItems()</code> and renders the results with a Razor foreach loop.
+            The Create/Edit/Delete forms post back to their handlers, which invoke service methods and redirect.
+        </p>
+    </a>
+</section>
+
+<section>
+    <h2>Running and learning</h2>
+    <p>
+        Use <code>&lt;DOTNET_ROOT&gt;/dotnet run</code> (or <code>dotnet run</code> if the SDK is on your PATH) to build and host the app.
+        Every request to <code>/Items</code> uses Razor Pages conventions and relies on the tag-helper-enabled forms
+        defined in <code>Pages/Items/*.cshtml</code>.
+    </p>
+    <p>
+        Inspect <code>WorkItemService.cs</code>, <code>IWorkItemRepository.cs</code>, and <code>InMemoryWorkItemRepository.cs</code>
+        to see how the list, update, and delete operations are composed before returning data to the UI.
+    </p>
+</section>
+
+<section>
+        <h2>Extend it</h2>
+    <p>
+        Swap the in-memory repository for Entity Framework Core, add API endpoints, or write unit tests in a <code>WorkLedger.Tests</code> project.
+        Because the UI and service layers remain separated, you can keep iterating without touching the layout or Razor markup.
+    </p>
+</section>
+
+<section>
+    <h2>Guided tour</h2>
+    <p>
+        Visit the Flow page for the rotating code cards, check Persistence for SQLite wiring, open Observability to review logs, browse the API page for the REST surface, and take the <a asp-page="/Testing">Testing page</a> for a spin to see how xUnit hits the logic.
+    </p>
+</section>

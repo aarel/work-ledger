@@ -1,0 +1,17 @@
+@page
+@model WorkLedger.Pages.PersistenceModel
+
+<section>
+    <h1>Persistence wiring</h1>
+    <p>
+        The EF Core implementation stores work items in `workledger.db` via `WorkLedgerDbContext`.
+        The context is registered in <code>Program.cs</code> and the app ensures the SQLite file is created at startup.
+    </p>
+    <pre><code>builder.Services.AddDbContext&lt;WorkLedgerDbContext&gt;(options =>
+    options.UseSqlite("Data Source=workledger.db"));
+builder.Services.AddScoped&lt;IWorkItemRepository, EfWorkItemRepository&gt;();</code></pre>
+    <p>
+        `EfWorkItemRepository` saves, updates, and deletes items by calling <code>SaveChanges()</code> after each mutation.
+        The service layer never needs to care whether the repository is backed by memory or a database.
+    </p>
+</section>

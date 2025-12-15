@@ -1,0 +1,20 @@
+@page "{id:int}"
+@model WorkLedger.Pages.Items.EditModel
+
+<h2>Edit Work Item</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Item.Id" />
+    <div class="mb-3">
+        <label asp-for="Item.Title" class="form-label hint" data-hint="Title editing mirrors the create form; the service replaces the existing item."></label>
+        <input asp-for="Item.Title" class="form-control" />
+        <span asp-validation-for="Item.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Description" class="form-label hint" data-hint="Changing this field updates the in-memory description for the selected work item."></label>
+        <textarea asp-for="Item.Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Item.Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>

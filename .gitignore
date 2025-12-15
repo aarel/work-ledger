@@ -1,0 +1,9 @@
+bin/
+obj/
+err.txt
+project_scaffold.txt
+
+# Agents
+agents/
+AGENTS.md
+CLAUDE.md

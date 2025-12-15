@@ -1,0 +1,67 @@
+@page
+@model WorkLedger.Pages.Items.CreateModel
+
+<h2>Create Work Item</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Item.Title" class="form-label"></label>
+        <input asp-for="Item.Title" class="form-control" />
+        <span asp-validation-for="Item.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.Description" class="form-label"></label>
+        <textarea asp-for="Item.Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Item.Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2" data-prompt-unsaved="true">Cancel</a>
+</form>
+
+@section Scripts {
+<script>
+(function () {
+    const form = document.querySelector("form");
+    if (!form) {
+        return;
+    }
+
+    let isDirty = false;
+
+    const markDirty = () => {
+        isDirty = true;
+    };
+
+    form.querySelectorAll("input, textarea").forEach((control) => {
+        control.addEventListener("input", markDirty);
+        control.addEventListener("change", markDirty);
+    });
+
+    form.addEventListener("submit", () => {
+        isDirty = false;
+    });
+
+    window.addEventListener("beforeunload", (event) => {
+        if (!isDirty) {
+            return;
+        }
+        event.preventDefault();
+        event.returnValue = "You have unsaved changes.";
+    });
+
+    document.querySelectorAll("[data-prompt-unsaved]").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            if (!isDirty) {
+                return;
+            }
+            const proceed = confirm("You have unsaved work. Leave without saving?");
+            if (!proceed) {
+                event.preventDefault();
+            } else {
+                isDirty = false;
+            }
+        });
+    });
+})();
+</script>
+}
